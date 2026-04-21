@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  member
+}
+
+enum RequestStatus {
+  pending
+  approved
+  running
+  completed
+  failed
+}
+
+enum JobStatus {
+  queued
+  running
+  completed
+  failed
+  cancelled
+}
+
+enum ReportStatus {
+  generating
+  ready
+  failed
+}
+
+model User {
+  id            String               @id @default(cuid())
+  name          String
+  email         String               @unique
+  passwordHash  String
+  role          UserRole             @default(member)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  sessions      Session[]
+  requests      UnlearningRequest[]
+  resetTokens   PasswordResetToken[]
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  tokenHash  String   @unique
+  userId     String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique
+  userId     String
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model AIModel {
+  id            String              @id @default(cuid())
+  name          String
+  version       String
+  ownerTeam     String
+  status        String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  requests      UnlearningRequest[]
+  riskMetrics   RiskMetric[]
+  reports       Report[]
+
+  @@unique([name, version])
+}
+
+model UnlearningRequest {
+  id            String             @id @default(cuid())
+  requestedById String
+  modelId       String
+  datasetRef    String
+  reason        String
+  priority      String
+  status        RequestStatus      @default(pending)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  requestedBy   User               @relation(fields: [requestedById], references: [id], onDelete: Restrict)
+  model         AIModel            @relation(fields: [modelId], references: [id], onDelete: Restrict)
+  jobs          UnlearningJob[]
+
+  @@index([requestedById])
+  @@index([modelId])
+  @@index([status])
+}
+
+model UnlearningJob {
+  id              String           @id @default(cuid())
+  requestId       String
+  status          JobStatus        @default(queued)
+  progress        Int              @default(0)
+  startedAt       DateTime?
+  completedAt     DateTime?
+  summary         String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  request         UnlearningRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@index([requestId])
+  @@index([status])
+}
+
+model RiskMetric {
+  id              String           @id @default(cuid())
+  modelId         String
+  piiExposure     Float
+  biasScore       Float
+  leakageRisk     Float
+  recordedAt      DateTime         @default(now())
+
+  model           AIModel          @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@index([modelId])
+  @@index([recordedAt])
+}
+
+model Report {
+  id              String           @id @default(cuid())
+  modelId         String
+  title           String
+  status          ReportStatus     @default(generating)
+  url             String?
+  generatedAt     DateTime?
+  createdAt       DateTime         @default(now())
+
+  model           AIModel          @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@index([modelId])
+  @@index([status])
+}

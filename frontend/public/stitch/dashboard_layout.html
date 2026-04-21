@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#003824",
+                        "on-secondary": "#003640",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#07006c",
+                        "surface-variant": "#353534",
+                        "on-surface-variant": "#c7c4d7",
+                        "primary-fixed": "#e1e0ff",
+                        "on-primary-container": "#0d0096",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary": "#4edea3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed": "#001f26",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#00885d",
+                        "primary-container": "#8083ff",
+                        "outline": "#908fa0",
+                        "on-tertiary-container": "#000703",
+                        "on-secondary-container": "#00424e",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e2e1",
+                        "error-container": "#93000a",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "surface-container": "#201f1f",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#acedff",
+                        "surface-tint": "#c0c1ff",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-container": "#03b5d3",
+                        "secondary": "#4cd7f6",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "primary": "#c0c1ff",
+                        "surface-bright": "#3a3939",
+                        "on-primary": "#1000a9",
+                        "on-tertiary-fixed": "#002113",
+                        "on-error": "#690005",
+                        "inverse-primary": "#494bd6",
+                        "surface-container-highest": "#353534",
+                        "outline-variant": "#464554",
+                        "inverse-on-surface": "#313030"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.6);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#1C1B1B] flex flex-col h-full py-6 px-4 z-50">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-black bg-gradient-to-br from-[#c0c1ff] to-[#4cd7f6] bg-clip-text text-transparent uppercase tracking-tighter">Ablate Enterprise</h1>
+<p class="text-xs text-slate-500 font-medium tracking-wide mt-1">Production Environment</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active State: Overview -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/5 text-[#c0c1ff] border-r-2 border-[#c0c1ff] font-['Inter'] text-sm font-medium tracking-wide transition-all" href="/dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/unlearning-jobs">
+<span class="material-symbols-outlined" data-icon="auto_fix_high">auto_fix_high</span>
+<span>Unlearning Jobs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/models">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span>Models</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/vector-db">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span>Vector DB</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/risk-monitor">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Risk Monitor</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/reports">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-white/5 font-['Inter'] text-sm font-medium tracking-wide transition-all cursor-pointer active:opacity-80" href="/dashboard/settings">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<a class="w-full flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-container text-on-primary py-3 rounded-xl font-semibold shadow-lg shadow-primary/10 hover:opacity-90 active:scale-95 transition-all" href="/dashboard/new-request">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>New Job</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<div class="ml-64 min-h-screen flex flex-col bg-background">
+<!-- TopNavBar Component -->
+<header class="w-full sticky top-0 z-40 bg-[#131313] border-b border-white/5 flex justify-between items-center px-6 h-16">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm text-on-surface focus:ring-1 focus:ring-primary/50 placeholder-slate-600" placeholder="Search unlearning jobs or models..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-white/5 rounded-full p-2 text-slate-400 hover:text-white transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-white/5 rounded-full p-2 text-slate-400 hover:text-white transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-white/5 mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-semibold text-white">Alex Chen</p>
+<p class="text-[10px] text-slate-500">ML Architect</p>
+</div>
+<img alt="User Avatar" class="w-9 h-9 rounded-full object-cover border border-white/10" data-alt="close-up portrait of a professional man with a neutral expression in a modern office with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATlEaQ2Xgqoz4r7jcIKR_8zFWnGSQz1RM9NeJZGd5xN2jNaVKPe7C7TUMPdHIJHmVuDat61GoBl5BdtSbnKmujv6Av4okDo44-6mTSigz1z5PxDmMcYpvJKosJ9YW9w5kREz_artxPuxHshnS_8yWeWKjLbaxPUyos9jy_Cym2VaCWCgm_X9tI6iY6oADdqn1zZvsu_3DIWYmnclweeG_GZOHpqYn-htN9ytl4a2Ir6Ia4awrgZgFH2q7LAREYYHjcD89-RY7cvAQ3"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 p-8 overflow-y-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-3xl font-headline font-bold tracking-tight text-white mb-2">Overview</h2>
+<p class="text-on-surface-variant max-w-2xl leading-relaxed">System-wide performance monitoring and AI unlearning efficacy metrics.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg border border-white/5 text-sm text-slate-300">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span>Last 24 Hours</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Hero Stat: Compliance Health -->
+<div class="col-span-12 lg:col-span-8 glass-panel p-8 rounded-2xl relative overflow-hidden flex flex-col justify-between min-h-[320px]">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="flex h-2 w-2 rounded-full bg-tertiary"></span>
+<span class="text-xs font-label uppercase tracking-widest text-tertiary">Global Compliance Score</span>
+</div>
+<h3 class="text-6xl font-headline font-black text-white tracking-tighter">98.4%</h3>
+<p class="text-on-surface-variant mt-4 max-w-sm">Your model ecosystem currently meets all GDPR and CCPA "Right to be Forgotten" requirements across 14 clusters.</p>
+</div>
+<div class="relative z-10 flex gap-12 mt-8">
+<div>
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-500 mb-1">Active Jobs</p>
+<p class="text-xl font-bold text-white">12</p>
+</div>
+<div>
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-500 mb-1">Avg. Latency</p>
+<p class="text-xl font-bold text-white">42ms</p>
+</div>
+<div>
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-500 mb-1">Safety Buff</p>
+<p class="text-xl font-bold text-white">High</p>
+</div>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute right-0 top-0 w-1/2 h-full opacity-30 pointer-events-none">
+<div class="w-full h-full bg-gradient-to-l from-primary/20 to-transparent"></div>
+</div>
+</div>
+<!-- Secondary Card: Risk Monitor -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low p-6 rounded-2xl flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-6">
+<h4 class="font-headline font-semibold text-white">Risk Leakage</h4>
+<span class="material-symbols-outlined text-secondary" data-icon="shield">shield</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">PII Exposure</span>
+<span class="text-white font-medium">0.002%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[2%]"></div>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Copyrighted Snippets</span>
+<span class="text-white font-medium">1.4%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[15%]"></div>
+</div>
+</div>
+</div>
+<button class="mt-8 text-xs font-label uppercase tracking-widest text-primary hover:text-white transition-colors flex items-center gap-2">
+                        View Full Report
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Active Jobs List -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container p-6 rounded-2xl">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline font-semibold text-white">Recent Unlearning Jobs</h4>
+<button class="text-xs text-slate-500 hover:text-white transition-colors">See all</a>
+</div>
+<div class="space-y-3">
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between border border-white/[0.02]">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+</div>
+<div>
+<p class="text-sm font-medium text-white">User_2910_Deletion</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Llama-3-70B-Base</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] px-2 py-1 rounded bg-tertiary/10 text-tertiary border border-tertiary/20">Success</span>
+<p class="text-[10px] text-slate-500 mt-1">2m ago</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between border border-white/[0.02]">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
+</div>
+<div>
+<p class="text-sm font-medium text-white">Financial_Report_Q3_Purge</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Custom-RAG-Vector-01</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] px-2 py-1 rounded bg-primary/10 text-primary border border-primary/20">Processing</span>
+<p class="text-[10px] text-slate-500 mt-1">15m ago</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between border border-white/[0.02]">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400" data-icon="dns">dns</span>
+</div>
+<div>
+<p class="text-sm font-medium text-white">Batch_GDPR_Compliance_W22</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Multiple Targets</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] px-2 py-1 rounded bg-slate-500/10 text-slate-500 border border-slate-500/20">Queued</span>
+<p class="text-[10px] text-slate-500 mt-1">1h ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Knowledge Graph Placeholder / Visualization -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest rounded-2xl overflow-hidden relative group">
+<img alt="Abstract Network Graph" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="abstract 3D visualization of interconnected glowing neural network nodes with ethereal purple and cyan light trails on black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkK5d7rpkhhGOwQzfglkQQu0ZLaylEIJySSj__r7E5gWBUGo2fZKxbVI2P_RFYnUL-KwsreLDl4uErIFpr4BENqAsmqwPunEwAQtiG3pctD5bQax3WYR2X5uz2jKXcGKZsXLuHj1YERpMwU5ym3ck2HIV-MH7xGIaFggrYYXK147eS8ADzk3a5X2SVjz3c79sQ7_0V3xPF9YUlkob2iwev0ZX085aGW98j0v-kNYs1lqtypy6TsMgGazekvpsFP2XQh3TTIyEbRLfZ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<h4 class="text-white font-headline font-semibold mb-1">Entity Drift Monitor</h4>
+<p class="text-xs text-on-surface-variant">Real-time visualization of semantic detachment.</p>
+</div>
+<div class="absolute top-6 right-6">
+<button class="bg-white/10 backdrop-blur-md h-10 w-10 rounded-full flex items-center justify-center text-white border border-white/10">
+<span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="w-full py-8 mt-auto border-t border-white/5 bg-[#0E0E0E] flex flex-col items-center gap-4">
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-slate-600 hover:text-[#c0c1ff] transition-colors" href="/">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-slate-600 hover:text-[#c0c1ff] transition-colors" href="/">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-slate-600 hover:text-[#c0c1ff] transition-colors" href="/">Security</a>
+</div>
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-slate-500">© 2024 Ablate AI. All rights reserved.</p>
+</footer>
+</div>
+<script src="/stitch/stitch-nav.js"></script>`r`n</body></html>

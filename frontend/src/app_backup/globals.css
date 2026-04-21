@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --background: #020617;
+  --surface: #0f172a;
+  --accent-primary: #3b82f6;
+  --accent-glow: #22d3ee;
+  --accent-highlight: #a855f7;
+  --success: #22c55e;
+  --danger: #f43f5e;
+  --text-primary: #e5e7eb;
+  --text-secondary: #64748b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+a,
+button {
+  transition: all 180ms ease;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 999px;
+}
+
+.animate-circuit-line {
+  stroke-dasharray: 12 18;
+  animation-name: circuit-flow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes circuit-flow {
+  0% {
+    stroke-dashoffset: 240;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.15;
+  }
+}

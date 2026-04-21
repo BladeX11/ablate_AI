@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ablate AI | Intelligent Machine Unlearning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#003824",
+              "on-secondary": "#003640",
+              "on-surface": "#e5e2e1",
+              "on-primary-fixed": "#07006c",
+              "surface-variant": "#353534",
+              "on-surface-variant": "#c7c4d7",
+              "primary-fixed": "#e1e0ff",
+              "on-primary-container": "#0d0096",
+              "tertiary-fixed": "#6ffbbe",
+              "tertiary": "#4edea3",
+              "surface-container-lowest": "#0e0e0e",
+              "on-secondary-fixed": "#001f26",
+              "error": "#ffb4ab",
+              "tertiary-container": "#00885d",
+              "primary-container": "#8083ff",
+              "outline": "#908fa0",
+              "on-tertiary-container": "#000703",
+              "on-secondary-container": "#00424e",
+              "on-primary-fixed-variant": "#2f2ebe",
+              "background": "#131313",
+              "surface": "#131313",
+              "secondary-fixed-dim": "#4cd7f6",
+              "on-tertiary-fixed-variant": "#005236",
+              "on-error-container": "#ffdad6",
+              "on-background": "#e5e2e1",
+              "error-container": "#93000a",
+              "surface-dim": "#131313",
+              "inverse-surface": "#e5e2e1",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-fixed-variant": "#004e5c",
+              "surface-container": "#201f1f",
+              "tertiary-fixed-dim": "#4edea3",
+              "secondary-fixed": "#acedff",
+              "surface-tint": "#c0c1ff",
+              "surface-container-low": "#1c1b1b",
+              "secondary-container": "#03b5d3",
+              "secondary": "#4cd7f6",
+              "primary-fixed-dim": "#c0c1ff",
+              "primary": "#c0c1ff",
+              "surface-bright": "#3a3939",
+              "on-primary": "#1000a9",
+              "on-tertiary-fixed": "#002113",
+              "on-error": "#690005",
+              "inverse-primary": "#494bd6",
+              "surface-container-highest": "#353534",
+              "outline-variant": "#464554",
+              "inverse-on-surface": "#313030"
+            },
+            fontFamily: {
+              "headline": ["Inter", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #131313; color: #e5e2e1; }
+        .glass-panel { backdrop-filter: blur(24px); background: rgba(53, 53, 52, 0.6); }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(192, 193, 255, 0.08) 0%, transparent 70%); }
+        .text-glow { text-shadow: 0 0 20px rgba(192, 193, 255, 0.3); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="font-body selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-indigo-500/5">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-[#c0c1ff] font-headline">Ablate AI</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#c0c1ff] font-semibold transition-colors duration-200 hover:text-white" href="/dashboard">Features</a>
+<a class="text-slate-400 font-medium transition-colors duration-200 hover:text-white" href="/dashboard/models">Solutions</a>
+<a class="text-slate-400 font-medium transition-colors duration-200 hover:text-white" href="/dashboard/vector-db">Developers</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container px-6 py-2 rounded-xl text-on-primary-container font-semibold active:scale-95 transition-all text-sm">
+                    Get Started
+                </button>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="relative px-8 overflow-hidden min-h-[819px] flex flex-col items-center justify-center hero-gradient">
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<span class="inline-block px-4 py-1.5 mb-8 rounded-full border border-outline-variant/30 text-primary-fixed-dim text-xs font-bold tracking-widest uppercase bg-surface-container-low">
+                    The Future of Enterprise MLOps
+                </span>
+<h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface mb-8 leading-[1.1]">
+                    Self-Healing AI Through <br/>
+<span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent text-glow">Intelligent Machine Unlearning</span>
+</h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+                    A Self-Healing Enterprise Machine Unlearning &amp; MLOps Platform. Remove bias, ensure privacy compliance, and fix model drift in production without full retraining.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="w-full sm:w-auto px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-bold rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all active:scale-95">
+                        Get Started
+                    </button>
+<button class="w-full sm:w-auto px-8 py-4 border border-outline-variant/20 hover:bg-white/5 text-on-surface font-semibold rounded-xl transition-all">
+                        View Demo
+                    </button>
+</div>
+</div>
+<!-- Visualization Placeholder -->
+<div class="mt-24 w-full max-w-6xl aspect-[21/9] rounded-2xl bg-surface-container-lowest border border-white/5 relative group overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(76,215,246,0.05),_transparent_70%)]"></div>
+<!-- Mock 3D Graph -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<div class="w-full h-full relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-primary/20 rounded-full animate-pulse"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] border border-secondary/10 rounded-full"></div>
+<div class="absolute top-[40%] left-[30%] w-2 h-2 bg-primary rounded-full shadow-[0_0_15px_rgba(192,193,255,0.8)]"></div>
+<div class="absolute top-[60%] left-[70%] w-2 h-2 bg-secondary rounded-full shadow-[0_0_15px_rgba(76,215,246,0.8)]"></div>
+<div class="absolute top-[20%] left-[60%] w-2 h-2 bg-tertiary rounded-full shadow-[0_0_15px_rgba(78,222,163,0.8)]"></div>
+</div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<span class="material-symbols-outlined text-5xl text-primary mb-4" style="font-variation-settings: 'FILL' 1;">hub</span>
+<p class="text-sm font-label uppercase tracking-widest text-on-surface-variant">Live Neural Influence Mapping</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Section -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="text-center mb-24">
+<h2 class="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Continuous Unlearning Cycle</h2>
+<div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+<div class="p-8 rounded-2xl bg-surface-container-low border border-white/5 flex flex-col items-center text-center">
+<span class="text-4xl font-black text-outline-variant mb-4">01</span>
+<h3 class="font-bold text-on-surface mb-2">Detect</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Bias &amp; Drift Scan</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-low border border-white/5 flex flex-col items-center text-center">
+<span class="text-4xl font-black text-outline-variant mb-4">02</span>
+<h3 class="font-bold text-on-surface mb-2">Decide</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Influence Analytics</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-low border border-white/5 flex flex-col items-center text-center">
+<span class="text-4xl font-black text-outline-variant mb-4">03</span>
+<h3 class="font-bold text-on-surface mb-2">Unlearn</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Ablation Logic</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-low border border-white/5 flex flex-col items-center text-center">
+<span class="text-4xl font-black text-outline-variant mb-4">04</span>
+<h3 class="font-bold text-on-surface mb-2">Verify</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">K-Verification</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-low border border-white/5 flex flex-col items-center text-center">
+<span class="text-4xl font-black text-outline-variant mb-4">05</span>
+<h3 class="font-bold text-on-surface mb-2">Deploy</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Shielded Rollout</p>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-6 h-full">
+<!-- Main Feature -->
+<div class="md:col-span-8 md:row-span-1 p-8 rounded-3xl bg-surface-container-low border border-white/5 flex flex-col justify-between group">
+<div>
+<span class="material-symbols-outlined text-primary text-3xl mb-6">analytics</span>
+<h3 class="text-2xl font-bold mb-4">Influence Tracing</h3>
+<p class="text-on-surface-variant leading-relaxed max-w-lg">
+                            Precisely identify which training samples contribute to unwanted model outputs or toxic behavior using our proprietary Gradient Attribution Engine.
+                        </p>
+</div>
+<div class="mt-8 pt-8 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Advanced Analytics</span>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="md:col-span-4 md:row-span-1 p-8 rounded-3xl bg-surface-container-lowest border border-white/10 group">
+<span class="material-symbols-outlined text-secondary text-3xl mb-6">shield</span>
+<h3 class="text-xl font-bold mb-4">Hot Shield</h3>
+<p class="text-sm text-on-surface-variant mb-6">Zero-downtime protection that filters out toxic requests while the core model is being updated.</p>
+<div class="bg-secondary/10 px-4 py-2 rounded-lg inline-flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Active Guard</span>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="md:col-span-4 md:row-span-1 p-8 rounded-3xl bg-surface-container-high border border-white/5">
+<span class="material-symbols-outlined text-tertiary text-3xl mb-6">history_edu</span>
+<h3 class="text-xl font-bold mb-4">Cryptographic Proofs</h3>
+<p class="text-sm text-on-surface-variant">Generate mathematical certainty that specific data points have been completely purged from your weights.</p>
+</div>
+<!-- Feature 4 -->
+<div class="md:col-span-8 md:row-span-1 p-8 rounded-3xl bg-gradient-to-br from-surface-container-low to-surface-container-highest border border-white/5">
+<div class="flex flex-col md:flex-row gap-12 items-start">
+<div class="flex-1">
+<span class="material-symbols-outlined text-primary-fixed-dim text-3xl mb-6">schema</span>
+<h3 class="text-2xl font-bold mb-4">Dual-Track Unlearning</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                                Synchronized deletion across your base weights and RAG vector databases. Ensure absolute semantic removal without breaking context windows.
+                            </p>
+</div>
+<div class="w-full md:w-64 aspect-square rounded-2xl bg-surface-container-lowest flex items-center justify-center p-4 border border-white/5">
+<img class="w-full h-full object-cover rounded-xl opacity-80" data-alt="abstract glowing neural network diagram with indigo and cyan neon lines on a deep black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2Avx84azMCupPOPxN7CbwyR3Ulcd_y5lpyPcx9WK6IDRQEbI2b1F7YKmd5XDbF2DKUv6G-G5VzwmvKxiHeYk7GJODzpemsC_JaH6sTBtQlF_0zj_LN3xLOTwjcO20PZYfJlwapaLRwKssqZMhWr4EQBnhGtP1wDhihpOb-2MBsz59ubIcvD6mNHNLccyyR4KtU0xSrQX9YtdRebobFO53jlKrjIMnnYrq0IqErKeBKH7Qv4v2IVuLrwuO7nlL97JfX1TM9vSdX58F"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Semantic Anti-Sets Section -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center gap-24">
+<div class="flex-1">
+<h2 class="text-4xl font-extrabold tracking-tighter mb-8 leading-tight">Semantic Anti-Sets</h2>
+<p class="text-lg text-on-surface-variant mb-12 font-medium">
+                        Go beyond simple row deletion. Ablate AI creates "Anti-Sets" that mathematically counteract problematic concepts within the model's latent space, ensuring the root cause is erased, not just the symptom.
+                    </p>
+<ul class="space-y-6">
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-semibold">Concept-level erasure</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-semibold">Latent space normalization</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-semibold">Contextual bias mitigation</span>
+</li>
+</ul>
+</div>
+<div class="flex-1 w-full aspect-square rounded-3xl bg-surface-container border border-white/5 p-1 relative">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10 rounded-3xl"></div>
+<img class="w-full h-full object-cover rounded-[22px] mix-blend-lighten" data-alt="3d abstract shape representing a complex data structure being disassembled with digital light particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0U1pCsNwCjzLQkcBZDeqQYTigM9MmSGlnyGKWIMbywjYjJl3HSPGyK0voGeJ_K7yQeyRXHOgQrFXJ3859o-Ql-JGa9rvZDqCwxPkRxTbquHaMYe5mV7PC1Bocej2R9Rmmjt2Ypq6uIore2DAIcpXThRmWYsicFGClu5f_7jEgh5JL4JV-7gjduQcQGuBaBRV1o1MwpEx7JFlnCo6UjS1p5YBBp7u9FG3Xj8DWk1sCdgwqYNe8Q0H3_AWfjXxK72OestE8SseWT_wi"/>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-40 px-8 text-center bg-[#131313] relative overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="relative z-10 max-w-3xl mx-auto">
+<h2 class="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Ready to deploy unlearnable AI?</h2>
+<p class="text-on-surface-variant text-lg mb-12">Join the world's leading enterprises securing their AI pipelines with Ablate AI.</p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="px-12 py-5 bg-white text-black font-black rounded-xl hover:scale-105 transition-transform">Get Started Now</button>
+<button class="px-12 py-5 border border-outline-variant/30 text-white font-bold rounded-xl hover:bg-white/5 transition-colors">Book a Consultation</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-[#0E0E0E] border-t border-white/5">
+<div class="max-w-7xl mx-auto px-8 flex flex-col items-center gap-8">
+<div class="text-xl font-bold tracking-tighter text-[#c0c1ff]">Ablate AI</div>
+<div class="flex gap-12">
+<a class="text-slate-600 font-medium uppercase tracking-widest text-xs transition-colors hover:text-[#c0c1ff]" href="/">Privacy</a>
+<a class="text-slate-600 font-medium uppercase tracking-widest text-xs transition-colors hover:text-[#c0c1ff]" href="/">Terms</a>
+<a class="text-slate-600 font-medium uppercase tracking-widest text-xs transition-colors hover:text-[#c0c1ff]" href="/">Security</a>
+</div>
+<p class="text-slate-500 font-medium uppercase tracking-widest text-[10px] mt-4">
+                © 2024 Ablate AI. All rights reserved.
+            </p>
+</div>
+</footer>
+<script src="/stitch/stitch-nav.js"></script>`r`n</body></html>

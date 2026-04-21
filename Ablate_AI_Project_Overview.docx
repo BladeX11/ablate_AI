@@ -1,0 +1,99 @@
+Ablate AI Project Overview
+=========================
+
+Project Name: Ablate AI
+Tagline: A Self-Healing Enterprise Machine Unlearning & MLOps Platform
+
+---
+
+1. Project Overview
+-------------------
+Ablate AI is an enterprise-grade AI governance and self-healing platform. It enables organizations to surgically remove (unlearn) targeted information—such as sensitive PII, biased content, or accuracy-degrading noise—from deployed Large Language Models (LLMs) and Vector Databases without the need to retrain models from scratch. It transforms compliance and AI performance optimization into a measurable, automated, and mathematically proven process.
+
+2. Problem Statement
+--------------------
+- Compliance & Memorization: LLMs memorize training data. Under GDPR, HIPAA, and CCPA, enterprises must guarantee the deletion of sensitive user data upon request. Currently, models cannot easily "forget."
+- Catastrophic Forgetting: Forcing a model to forget specific data often damages its general reasoning capability.
+- RAG Vulnerabilities: Even if a model forgets data, enterprise RAG (Retrieval-Augmented Generation) systems can still leak sensitive data via Vector Databases.
+- Bad Data Degradation: Erroneous, toxic, or outdated training data actively degrades model accuracy and leads to hallucinations. Tracing and removing this data is historically impossible without expensive full-scale retraining.
+
+3. Target Audience
+------------------
+- AI Governance / Compliance Officers: Need to guarantee and prove (via audit) that sensitive data is removed.
+- Machine Learning Engineers: Need to maintain high model accuracy, manage datasets efficiently, and avoid expensive retraining cycles.
+
+4. Core Features & "100x" Innovations
+-------------------------------------
+1. Influence-Function Tracing & Data Valuation: Mathematically traces back bad inferences to specific bad training records, flagging them for pruning.
+2. Dual-Track Unlearning (Model + RAG): Simultaneously runs gradient-ascent weight editing on the model and purges semantic embeddings from Vector Databases.
+3. "Hot Shield" (Zero-Downtime Mitigation): Instantly deploys a dynamic guardrail to stop leaks while unlearning jobs run asynchronously.
+4. Semantic Anti-Sets (Concept Unlearning): Generates 50+ semantic variations of a concept to ensure complete eradication, not just string matches.
+5. Blast Radius Simulator: Runs regression benchmarks to guarantee model intelligence is not degraded post-unlearning.
+6. Cryptographic Proof of Unlearning: Generates GDPR/HIPAA-compliant certificates with cryptographic hashes and divergence metrics.
+
+5. What We Have Built So Far
+----------------------------
+- Full-stack MLOps platform with:
+  - Next.js + Tailwind dashboard for submitting unlearning requests, tracking jobs, viewing reports, and downloading certificates.
+  - FastAPI backend with Celery for async job orchestration, handling model unlearning, PII detection, and database operations.
+  - Integrations with Vector DBs (Milvus/Pinecone), PostgreSQL for metadata, and support for model fine-tuning/unlearning.
+
+6. How It Works
+---------------
+- Users submit unlearning or data deletion requests via the dashboard.
+- Backend triggers a multi-step pipeline:
+  1. Deploys a “Hot Shield” (semantic guardrail) to block leaks instantly.
+  2. Generates semantic anti-sets (variations of the sensitive concept) using LLMs.
+  3. Purges related embeddings from the vector database.
+  4. Runs gradient ascent or weight editing (LoRA, ROME/MEMIT) on the model to surgically “forget” the target data.
+  5. Runs regression tests (Blast Radius Simulator) to ensure model utility is preserved.
+  6. Issues a cryptographic certificate proving the unlearning.
+
+7. Tech Stack
+-------------
+- Frontend: Next.js (React), Tailwind CSS
+- Backend: FastAPI, Celery, Redis/RabbitMQ
+- ML/Unlearning: PyTorch, Hugging Face Transformers/PEFT, Captum (influence tracing), Presidio/spaCy (PII detection)
+- Databases: PostgreSQL, Milvus/Pinecone (vector DB)
+- Models: Open-source LLMs (TinyLlama, Llama-3-8B), all-MiniLM-L6-v2 for embeddings, GPT-4o/local Llama for concept generation
+
+8. Why This Project is Unique
+-----------------------------
+- Dual-track unlearning: Simultaneously edits model weights and purges vector DBs.
+- Semantic anti-sets: Removes all conceptual traces, not just string matches.
+- Hot Shield: Zero-downtime protection while unlearning jobs run.
+- Cryptographic proof: Generates legal certificates with hash and divergence metrics.
+- Automated blast radius checks: Ensures no catastrophic forgetting.
+
+9. What Model Does Which Work
+-----------------------------
+- “Patient” Model (e.g., TinyLlama, Llama-3-8B): The main LLM being unlearned.
+- “Tools”:
+  - GPT-4o/local Llama: Generates semantic variations for anti-sets.
+  - Presidio/spaCy: Detects PII in data.
+  - all-MiniLM-L6-v2: Generates embeddings for vector DB search/purge.
+
+10. How Machine Unlearning is Happening
+---------------------------------------
+- Influence tracing (Captum) identifies which training records caused unwanted outputs.
+- Gradient ascent or weight editing (LoRA, ROME/MEMIT) is applied to the model to “forget” those records.
+- Vector DBs are searched for related embeddings and purged.
+- Semantic anti-sets ensure all conceptual traces are removed, not just exact matches.
+
+11. How Sensitive Data is Removed Properly
+------------------------------------------
+- PII is detected and flagged using Presidio/spaCy.
+- All semantic variants are generated and used to search/purge both the model and vector DB.
+- The process is mathematically validated (regression tests, hash comparisons).
+- A cryptographic certificate is generated as legal proof of deletion.
+
+12. Evaluation & Success Metrics
+-------------------------------
+- Membership Inference Attack (MIA) Success Rate: Must drop to ~50% (random guessing) on target data post-unlearning.
+- Recall of Sensitive Extracted Strings: 0%.
+- General Utility Drop (Blast Radius): Baseline MMLU/HumanEval score retention must be > 99%.
+- Speed to Protection: “Hot Shield” deployed in < 2 seconds.
+
+---
+
+For more details, see the PRD and technical blueprint files in the repository.
