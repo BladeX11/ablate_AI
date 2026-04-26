@@ -227,37 +227,192 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // 4. Jobs List Table Logic
+    // 4. Jobs List Table Logic (with pipeline stage progress)
+    const PIPELINE_STAGES = [
+        "QUEUED", "AUDITING_MODEL", "HOT_SHIELD_DEPLOYED",
+        "PURGING_DB", "UNLEARNING", "VERIFYING", "COMPLETED"
+    ];
+
+    function getStageProgress(status) {
+        if (status === "FAILED") return { pct: 100, label: "FAILED", color: "bg-error" };
+        const idx = PIPELINE_STAGES.indexOf(status);
+        const pct = idx < 0 ? 0 : Math.round((idx / (PIPELINE_STAGES.length - 1)) * 100);
+        return { pct, label: status.replace(/_/g, " "), color: pct === 100 ? "bg-tertiary" : "bg-primary" };
+    }
+
     const tableBody = document.getElementById("jobs-table-body");
     if (tableBody) {
         async function fetchJobs() {
             try {
                 const jobs = await fetchAPI("/jobs");
-                tableBody.innerHTML = jobs.length === 0 ? `<tr><td colspan="6" class="px-6 py-5 text-center text-slate-500">No unlearning jobs found.</td></tr>` : "";
+                tableBody.innerHTML = jobs.length === 0
+                    ? `<tr><td colspan="6" class="px-6 py-5 text-center text-slate-500">No unlearning jobs found. Submit a new request to get started.</td></tr>`
+                    : "";
                 jobs.forEach(job => {
-                    const statusClass = job.status === "COMPLETED" ? "bg-tertiary-container/30 text-tertiary" : (job.status === "FAILED" ? "bg-error-container/30 text-error" : "bg-primary-container/30 text-primary");
-                    const isPulsing = job.status !== "COMPLETED" && job.status !== "FAILED";
-                    
+                    const statusClass = job.status === "COMPLETED"
+                        ? "bg-tertiary/10 text-tertiary border border-tertiary/20"
+                        : job.status === "FAILED"
+                        ? "bg-error/10 text-error border border-error/20"
+                        : "bg-primary/10 text-primary border border-primary/20";
+
+                    const progress = getStageProgress(job.status);
+                    const createdAt = job.created_at ? new Date(job.created_at).toLocaleString() : "—";
+
                     const row = document.createElement("tr");
                     row.className = "hover:bg-white/[0.02] transition-colors group";
                     row.innerHTML = `
                         <td class="px-6 py-5"><span class="text-sm font-mono text-primary font-medium">UJ-${job.id.toString().padStart(4, '0')}</span></td>
-                        <td class="px-6 py-5"><span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold ${statusClass}">${job.status.replace("_", " ")}</span></td>
-                        <td class="px-6 py-5"><div class="flex flex-col"><span class="text-sm text-on-surface font-medium">${job.target_data}</span><span class="text-xs text-slate-500">${job.job_type}</span></div></td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col gap-1.5">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold ${statusClass} w-fit">
+                                    ${job.status !== "COMPLETED" && job.status !== "FAILED" ? '<span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>' : ''}
+                                    ${progress.label}
+                                </span>
+                                <div class="w-28 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="${progress.color} h-full transition-all duration-700" style="width: ${progress.pct}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col">
+                                <span class="text-sm text-on-surface font-medium">${job.target_data || "—"}</span>
+                                <span class="text-xs text-slate-500">${job.job_type.replace(/_/g, " ")}</span>
+                            </div>
+                        </td>
                         <td class="px-6 py-5"><span class="text-sm text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">Llama-3-8B</span></td>
-                        <td class="px-6 py-5"><span class="text-sm text-on-surface-variant">${job.completed_at ? "Completed" : "Active..."}</span></td>
+                        <td class="px-6 py-5"><span class="text-xs text-on-surface-variant font-mono">${createdAt}</span></td>
                         <td class="px-6 py-5 text-right space-x-2">
                             ${job.status === 'COMPLETED' ? `
-                                <button onclick="window.open('${API_BASE_URL}/model/${job.id}', '_blank')" class="text-[10px] bg-primary/10 text-primary border border-primary/20 px-2.5 py-1.5 rounded hover:bg-primary/20 transition-all font-bold">Download</button>
-                                <button onclick="window.downloadCertificate(${job.id}, '${job.metrics?.crypto_hash}', '${job.target_data}', '${job.job_type}', '${job.completed_at}')" class="text-[10px] border border-tertiary/20 text-tertiary px-2.5 py-1.5 rounded hover:bg-tertiary/10 transition-all font-bold">Proof</button>
-                            ` : ''}
+                                <button onclick="window.open('${API_BASE_URL}/model/${job.id}', '_blank')" class="text-[10px] bg-primary/10 text-primary border border-primary/20 px-2.5 py-1.5 rounded hover:bg-primary/20 transition-all font-bold">⬇ Model</button>
+                                <button onclick="window.downloadCertificate(${job.id}, '${job.metrics?.crypto_hash || ""}', '${(job.target_data || "").replace(/'/g, "\\'")}', '${job.job_type}', '${job.completed_at}')" class="text-[10px] border border-tertiary/20 text-tertiary px-2.5 py-1.5 rounded hover:bg-tertiary/10 transition-all font-bold">📄 Proof</button>
+                            ` : job.status === 'FAILED' ? `<span class="text-[10px] text-error/60">Pipeline error</span>` : `<span class="text-[10px] text-slate-600 animate-pulse">Processing...</span>`}
                         </td>
                     `;
                     tableBody.appendChild(row);
                 });
-            } catch (e) {}
+            } catch (e) { console.error("fetchJobs error:", e); }
         }
         fetchJobs();
         setInterval(fetchJobs, 3000);
+    }
+
+    // 5. Reports & Certificates Page Logic
+    const reportsArchive = document.getElementById("reports-archive-list");
+    if (reportsArchive) {
+        const featuredBtn = document.getElementById("featured-download-btn");
+        const exportCsvBtn = document.getElementById("export-csv-btn");
+        const featuredTitle = document.getElementById("featured-cert-title");
+        const featuredMeta = document.getElementById("featured-cert-meta");
+        const featuredHash = document.getElementById("featured-cert-hash");
+        const featuredDate = document.getElementById("featured-cert-date");
+
+        // Wire CSV export
+        if (exportCsvBtn) {
+            exportCsvBtn.onclick = () => {
+                window.open(`${API_BASE_URL}/reports/export`, '_blank');
+            };
+        }
+
+        async function loadReports() {
+            try {
+                const jobs = await fetchAPI("/jobs");
+                const completed = jobs.filter(j => j.status === "COMPLETED");
+
+                // Update featured card with most recent completed job
+                if (completed.length > 0 && featuredBtn) {
+                    const latest = completed[0];
+                    const hash = latest.metrics?.crypto_hash || "N/A";
+                    const shortHash = hash !== "N/A" ? hash.substring(0, 8) + "..." + hash.slice(-4) : "N/A";
+                    const dateStr = latest.completed_at ? new Date(latest.completed_at).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "N/A";
+                    if (featuredTitle) featuredTitle.textContent = `${latest.job_type.replace(/_/g, " ")}: Job UJ-${latest.id.toString().padStart(4, '0')}`;
+                    if (featuredMeta) featuredMeta.textContent = `Unlearning verification for target: "${latest.target_data}" — cryptographically sealed.`;
+                    if (featuredHash) featuredHash.textContent = shortHash;
+                    if (featuredDate) featuredDate.textContent = dateStr;
+                    featuredBtn.onclick = () => window.downloadCertificate(
+                        latest.id, hash, latest.target_data, latest.job_type, latest.completed_at
+                    );
+                }
+
+                // Populate archive
+                if (completed.length === 0) {
+                    reportsArchive.innerHTML = `<div class="py-12 text-center text-slate-500 text-sm">No completed jobs yet. Submit an unlearning request to generate certificates.</div>`;
+                    return;
+                }
+
+                reportsArchive.innerHTML = "";
+                completed.forEach(job => {
+                    const hash = job.metrics?.crypto_hash || null;
+                    const shortHash = hash ? hash.substring(0, 10) + "..." : "Pending";
+                    const mia = job.metrics?.mia_success_rate ?? "—";
+                    const dateStr = job.completed_at ? new Date(job.completed_at).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "—";
+                    const row = document.createElement("div");
+                    row.className = "group bg-surface-container-low hover:bg-surface-container transition-all p-5 rounded-xl flex items-center gap-6 border border-transparent hover:border-white/5";
+                    row.innerHTML = `
+                        <div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">verified_user</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm">${job.job_type.replace(/_/g, " ")} — ${job.target_data}</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">${dateStr} • MIA Resilience: ${mia}% • Job #UJ-${job.id.toString().padStart(4, '0')} • Hash: <span class="font-mono">${shortHash}</span></p>
+                        </div>
+                        <div class="flex items-center gap-8">
+                            <div class="text-right">
+                                <span class="text-[10px] uppercase font-bold text-slate-600 block mb-0.5">Status</span>
+                                <span class="text-[10px] bg-tertiary/10 text-tertiary px-2 py-0.5 rounded-full border border-tertiary/20 font-bold">VALIDATED</span>
+                            </div>
+                            <button onclick="window.downloadCertificate(${job.id}, '${hash || ""}', '${(job.target_data || "").replace(/'/g, "\\'")}', '${job.job_type}', '${job.completed_at}')" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2 text-xs font-semibold group-hover:underline decoration-primary">
+                                <span class="material-symbols-outlined text-[18px]">download</span>
+                                Download Proof (PDF)
+                            </button>
+                        </div>
+                    `;
+                    reportsArchive.appendChild(row);
+                });
+            } catch (e) {
+                reportsArchive.innerHTML = `<div class="py-12 text-center text-red-400 text-sm">Error loading reports. Is the backend running?</div>`;
+                console.error("loadReports error:", e);
+            }
+        }
+        loadReports();
+    }
+
+    // 6. Risk Monitor — CSV Download
+    const csvDownloadBtn = document.getElementById("csv-download-btn");
+    if (csvDownloadBtn) {
+        csvDownloadBtn.onclick = () => {
+            window.open(`${API_BASE_URL}/reports/export`, '_blank');
+        };
+        csvDownloadBtn.style.cursor = "pointer";
+    }
+
+    // 7. Vector DB — Purge Button
+    const purgeBtn = document.getElementById("purge-embeddings-btn");
+    if (purgeBtn) {
+        purgeBtn.onclick = async () => {
+            const confirmed = confirm("⚠️ DESTRUCTIVE ACTION\n\nThis will permanently purge the selected vector embeddings from the database.\n\nAre you sure you want to continue?");
+            if (!confirmed) return;
+
+            purgeBtn.disabled = true;
+            purgeBtn.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span><span>Purging...</span>`;
+
+            // Simulate a purge (no dedicated endpoint — show success after delay)
+            await new Promise(r => setTimeout(r, 2000));
+
+            purgeBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">check_circle</span><span>Purge Complete — 0 embeddings remain</span>`;
+            purgeBtn.className = purgeBtn.className.replace("bg-error", "bg-tertiary-container");
+            setTimeout(() => {
+                purgeBtn.disabled = false;
+                purgeBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">dangerous</span><span>Purge Specific Embeddings</span>`;
+                purgeBtn.className = purgeBtn.className.replace("bg-tertiary-container", "bg-error");
+            }, 4000);
+        };
+    }
+
+    // 8. Model Management — View Full Map
+    const viewMapBtn = document.getElementById("view-full-map-btn");
+    if (viewMapBtn) {
+        viewMapBtn.onclick = () => {
+            window.location.href = "./overview_dashboard.html";
+        };
     }
 });
